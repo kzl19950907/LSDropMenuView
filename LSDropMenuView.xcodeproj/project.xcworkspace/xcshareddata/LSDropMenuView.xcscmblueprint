@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FA785008F2E9C16C76F19643C4E7720F865DBF57",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217" : 9223372036854775807,
+    "FA785008F2E9C16C76F19643C4E7720F865DBF57" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B6C59924-1F55-4C7D-874B-24813F19C20F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217" : "",
+    "FA785008F2E9C16C76F19643C4E7720F865DBF57" : "LSDropMenuView\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "LSDropMenuView",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "LSDropMenuView.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kzl19950907\/Coder_Mr.ls",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kzl19950907\/LSDropMenuView",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FA785008F2E9C16C76F19643C4E7720F865DBF57"
+    }
+  ]
+}
