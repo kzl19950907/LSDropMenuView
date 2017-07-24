@@ -51,6 +51,13 @@
 
 
 @optional
+
+
+/**
+ 返回每个展示tableView的rowheight （default 44）
+ */
+- (CGFloat)dropMenuView:(LSDropMenuView *)view heightForRowsAtColumn:(NSInteger)column isRightColumn:(BOOL)is subRow:(NSInteger)row;
+
 /**
  选中第indexPath.column个btn下的左边tab的indexPath.row
  is为YES subRow是右边tab选中的row
@@ -104,6 +111,15 @@
 @property (nonatomic, strong) UIImage *indicatorImage;
 //背景View
 @property (nonatomic, strong) UIColor *bottomBgColor;
+//default 80% of Screen
+@property (nonatomic, assign) CGFloat tableViewMaxPercentInView;
+
+//cell不能填充满bottomView时 自动调节tableView 高度
+@property (nonatomic, assign) BOOL autoAdjustTableViewHeightWhenCellUnderFilling;
+
+//default 44
+@property (nonatomic, assign) CGFloat rowHeight;
+
 
 
 - (void)reloadData;

@@ -31,7 +31,8 @@
     _menuView.cellBackgroundColor = [UIColor whiteColor];
     _menuView.cellSelectedBackgroundColor = [UIColor colorWithRed:243.0/255 green:248.0/255 blue:251.0/255 alpha:0];
     
-
+    _menuView.tableViewMaxPercentInView = 0.5;
+    _menuView.autoAdjustTableViewHeightWhenCellUnderFilling = NO;
     _menuView.delegate = self;
     _menuView.dataSource = self;
     [self.view addSubview:_menuView];
@@ -63,7 +64,7 @@
         return 10;
     }
     
-    return 15;
+    return 5;
     
 }
 
@@ -91,6 +92,26 @@
     NSLog(@"选中第 %ld column 第 %ld row %@-%ld",indexPath.column,indexPath.row,str,row);
 }
 
+
+- (CGFloat)dropMenuView:(LSDropMenuView *)view heightForRowsAtColumn:(NSInteger)column isRightColumn:(BOOL)is subRow:(NSInteger)row{
+    
+    //两个tab 右边tab 88 行高
+    if (is) {
+        
+        return 88;
+        
+    }
+    
+    //第一列 左边tab 44
+    if (column == 0 ) {
+        
+        return 44;
+        
+    }
+    //其他200
+    return 200;
+    
+}
 
 
 

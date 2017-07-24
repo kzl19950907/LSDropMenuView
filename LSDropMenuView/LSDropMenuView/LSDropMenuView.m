@@ -225,7 +225,7 @@
 #define selfW self.frame.size.width
 #define selfH self.frame.size.height
 #define bottomH [UIScreen mainScreen].bounds.size.height
-#define tabH 400
+#define tabH 0.8 * bottomH
 
 @interface LSDropMenuView () <UITableViewDelegate, UITableViewDataSource>
 
@@ -246,6 +246,8 @@
 @property (nonatomic, strong) NSMutableArray *offsetArray; //偏移数据
 
 @property (nonatomic, strong) NSMutableArray *indexPathArray; //选中数据
+
+@property (nonatomic, strong) NSMutableArray *tableViewHArray;//背景View 高度
 
 //临时选中记录
 @property (nonatomic, assign) NSInteger tempSelectColumn;
@@ -289,6 +291,13 @@
         
         _bottomBgColor = kSeparatorColor;
         
+        //rowheight
+        _rowHeight = 44;
+        //
+        //
+        _tableViewMaxPercentInView = 0.8;
+        _autoAdjustTableViewHeightWhenCellUnderFilling = YES;
+        
         _leftTableView = [[UITableView alloc] init];
         _leftTableView.delegate = self;
         _leftTableView.dataSource = self;
@@ -317,6 +326,8 @@
     _bottomView.backgroundColor = _bottomBgColor;
     //配置菜单按钮
     [self configMenuBtns];
+    //配置bottomView 高度缓存
+    [self configTableViewH];
     if (!_autoSelectPreAction) {
         return;
     }
@@ -324,6 +335,7 @@
     [self configHistorySelected];
     
 }
+
 
 #pragma mark --- 初始化选择点按按钮
 - (void)configMenuBtns{
@@ -360,6 +372,37 @@
         [self addSubview:btn];
     }
     _btns = [temp copy];
+}
+
+#pragma mark --- 配置tableView的高度
+- (void)configTableViewH{
+    
+    NSInteger num = [_dataSource numberOfColumnsInDropMenuView:self];
+    _tableViewHArray = [NSMutableArray array];
+    for (int i = 0; i < num; i ++) {
+        
+        NSInteger tempNum = [_dataSource dropMenuView:self numberOfRowsAtColumn:i isRightColumn:NO leftSelecteRow:0];
+        
+        CGFloat tempH = _rowHeight;
+        
+        //auto = NO 不调节 直接全部按_tableViewMaxPercentInView 来
+        //auto = YES 调节 超过_tableViewMaxPercentInView 按照_tableViewMaxPercentInView
+        //                不超过 原来高度
+        if (_delegate && [_delegate respondsToSelector:@selector(dropMenuView:heightForRowsAtColumn:isRightColumn:subRow:)]) {
+            
+            tempH = [_delegate dropMenuView:self heightForRowsAtColumn:i isRightColumn:NO subRow:0];
+            
+        }
+        
+        CGFloat limitH = [UIScreen mainScreen].bounds.size.height * _tableViewMaxPercentInView;
+        CGFloat maxH = tempH*tempNum > limitH ?limitH:tempNum*tempH;
+        if (!_autoAdjustTableViewHeightWhenCellUnderFilling) {
+            
+            maxH = limitH;
+        }
+        [_tableViewHArray addObject:[NSNumber numberWithFloat:maxH]];
+    }
+    
 }
 
 #pragma mark --- 初始化记录offset 选中行列
@@ -427,8 +470,8 @@
     if (_isUnFold) {
         //展开状态
         BOOL haveRight = [_dataSource dropMenuView:self haveRightAtColumn:_currentSelectColumn];
-        _leftTableView.frame = CGRectMake(selfX, selfY+selfH, haveRight?selfW/2:selfW, tabH);
-        _rightTableView.frame = CGRectMake(haveRight?selfW/2:0, selfY+selfH, haveRight?selfW/2:selfW, haveRight?tabH:0);
+        _leftTableView.frame = CGRectMake(selfX, selfY+selfH, haveRight?selfW/2:selfW, [self.tableViewHArray[_currentSelectColumn] floatValue]);
+        _rightTableView.frame = CGRectMake(haveRight?selfW/2:0, selfY+selfH, haveRight?selfW/2:selfW, haveRight?[self.tableViewHArray[_currentSelectColumn] floatValue]:0);
         _bottomView.frame = CGRectMake(selfX, selfY+selfH, selfW, bottomH);
         //重置tab
         [_leftTableView setContentOffset:CGPointZero];
@@ -574,6 +617,36 @@
         [self changeSelecteStateWithBtn:btn];
     }
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_delegate && [_delegate respondsToSelector:(@selector(dropMenuView:heightForRowsAtColumn:isRightColumn:subRow:))]) {
+        
+        BOOL haveRight = [_dataSource dropMenuView:self haveRightAtColumn:_currentSelectColumn];
+
+        if (!haveRight) {
+            //只有一个tab
+            CGFloat tempH = [_delegate dropMenuView:self heightForRowsAtColumn:_currentSelectColumn isRightColumn:NO subRow:0];
+            return tempH;
+        }
+        
+        if (tableView == _leftTableView) {
+            
+            CGFloat tempH = [_delegate dropMenuView:self heightForRowsAtColumn:_currentSelectColumn isRightColumn:NO subRow:indexPath.row];
+            return tempH;
+        }
+        if (tableView == _rightTableView) {
+                        
+            CGFloat tempH = [_delegate dropMenuView:self heightForRowsAtColumn:_currentSelectColumn isRightColumn:YES subRow:indexPath.row];
+            return tempH;
+        }
+    }
+    
+    return _rowHeight;
+}
+
+
+
 
 #pragma mark ---  点击收起MenuView
 - (void)dismissMenuView:(UIGestureRecognizer *)ges{
