@@ -4,12 +4,12 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217" : 9223372036854775807,
+    "BC7174D116140F83712EADEF4511886DE66D4339" : 9223372036854775807,
     "3C6583B179FAF62A36120B73D5711D69729C1E58" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B6C59924-1F55-4C7D-874B-24813F19C20F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217" : "",
+    "BC7174D116140F83712EADEF4511886DE66D4339" : "",
     "3C6583B179FAF62A36120B73D5711D69729C1E58" : "LSDropMenuView\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "LSDropMenuView",
@@ -24,7 +24,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kzl19950907\/Coder_Mr.ls",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9B0DB18C1F1231B7DE6F812498DAE665DD6FD217"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BC7174D116140F83712EADEF4511886DE66D4339"
     }
   ]
 }
