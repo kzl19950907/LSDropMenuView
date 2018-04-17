@@ -1,98 +1,77 @@
-
-[TOC]   
-
-*斜体*
-**粗体**
-***加粗斜体***    
-~~删除线~~
-
-# 第一章节
-
-## 第一章节
-
-这是一个一级标题
-====================
-
-这是一个二级标题
-------------------
-
-# 一级标题
-## 二级标题
-### 三级标题 。。。
-
-# ·超链接
-欢迎来到[我的git主页](https://https://github.com/kzl19950907/LSDropMenuView)
-邮件地址<1421699086@qq.com>
-
-[第一章节](#1)
-
-* ### [代码段](#2)
+[TOC]
 
 
-varcode = 10
-void cmp(string a, string b){
+* ### SDWebImage的基本使用  
 
+给imageView设置图片    
+```
+[bImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"placeholder"]];   
+```
+接下来调用到方法,我们一步一步分析每行代码分别做了什么操作。
+```
+-(void)sd_internalSetImageWithURL:(nullable NSURL *)url
+placeholderImage:(nullable UIImage *)placeholder
+options:(SDWebImageOptions)options
+operationKey:(nullable NSString *)operationKey
+setImageBlock:(nullable SDSetImageBlock)setImageBlock
+progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
+completed:(nullable SDExternalCompletionBlock)completedBlock
+context:(nullable NSDictionary<NSString *, id> *)context
+```
+validOperationKey代表的是存放UIView中所有optration的key,如果没有就以当前类class作为key。
 
+```
+NSString *validOperationKey = operationKey?:NSStringFromClass([self class]);    
+```
+
+调用cancle方法,通过key取消当前所有的图片加载操作。首先获取view中的oprationDictionary,找到当前key对应的operation 并调用cancle,从 oprationDictionary移除当前操作key。
+```
+[self sd_cancelImageLoadOperationWithKey:validOperationKey];
+
+- (void)sd_cancelImageLoadOperationWithKey:(nullable NSString *)key {
+// Cancel in progress downloader from queue
+SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
+id<SDWebImageOperation> operation;
+@synchronized (self) {
+operation = [operationDictionary objectForKey:key];
 }
-cmd我是代码块
-
-> 代码单行
-
-
-> 代码多行
->>123
->>>456
->>>>789
-
-`hello worldyou see`
-
-``` javascript
-var num = 0;
-for (var i = 0; i < array.length; i++) {
-array[i]
+if (operation) {
+if ([operation conformsToProtocol:@protocol(SDWebImageOperation)]){
+[operation cancel];
+}
+@synchronized (self) {
+[operationDictionary removeObjectForKey:key];
+}
+}
 }
 ```
 
-* ### 插入图片
-
-[![](01.png)](http://www.baidu.com)
-
-* ### 有序列表
-
-1. firstPage
-* one   
-
-2. secondPage
-3. thirdPage
-
-
-
-* ### 换行符= 两个tab
-yousee    
-i will show you something   
-something
-
-
-* ### 任务列表
-
-这是题目
-
-- [ ] 选项1
-- [ ] 选项二
-
-* ### 兼容性表情 😆
+* ###### SDOperationsDictionary介绍
+```
+typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
+```
+从定义来看 SDoperationDictionary是一个NSMaptable泛型,类似于而NSMaptable是什么一个类呢？
+* ###### [NSMapTable](http://www.isaced.com/post-235.html)
+NSMapTable 是一个map集合 即可以处理 key->obj映射,也可以处理 obj->obj映射。(NSDictionary只提供了key->obj映射,本质上来讲obj的位置是有key来索引的,并且NSDictionary会复制key到自己的私有空间,key需要遵从NSCopying协议,key应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。)
+```
+//key copy  value strong 构造的NSMapTable对象和NSMutableDictionary用起来类似 复制key 并且强引用obj
+NSMapTable *keyToObjectMapping = [NSMapTable mapTableWithKeyOptions:NSMapTableCopyIn valueOptions:NSMapTableStrongMemory];
+```   
+再回来看SDOperationsDictionary的get方法,为UIView动态添加属性sd_operationDictionary     
+```
+-(SDOperationsDictionary *)sd_operationDictionary{
+@synchronized(self) {
+SDOperationsDictionary *operations = objc_getAssociatedObject(self, &loadOperationKey);
+if (operations) {
+return operations;
+}
+//key strong obj weak
+operations = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsWeakMemory capacity:0];
+objc_setAssociatedObject(self, &loadOperationKey, operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+return operations;
+}
+}
+```
 
 
-* ## 表格
 
-| a | b | c |
-|:-------:|:------------- | ----------:|
-|   居中  |     左对齐    |   右对齐   |
-|=========|===========|============|
-
-简约派
-
-a | b | c
-:-: | :- | -:
-文字a | 文字b | 文字c
-= | == | ===
