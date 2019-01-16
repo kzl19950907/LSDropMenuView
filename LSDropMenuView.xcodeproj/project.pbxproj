@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D034B5141F0C7E69007DC282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D034B5131F0C7E69007DC282 /* main.m */; };
 		D034B5171F0C7E69007DC282 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D034B5161F0C7E69007DC282 /* AppDelegate.m */; };
 		D034B51A1F0C7E69007DC282 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034B5191F0C7E69007DC282 /* ViewController.m */; };
 		D034B51D1F0C7E69007DC282 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D034B51B1F0C7E69007DC282 /* Main.storyboard */; };
@@ -37,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		D034B50F1F0C7E69007DC282 /* LSDropMenuView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSDropMenuView.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D034B5131F0C7E69007DC282 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D034B5151F0C7E69007DC282 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D034B5161F0C7E69007DC282 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D034B5181F0C7E69007DC282 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 		D034B5121F0C7E69007DC282 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D034B5131F0C7E69007DC282 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -288,7 +285,6 @@
 			files = (
 				D034B51A1F0C7E69007DC282 /* ViewController.m in Sources */,
 				D034B5171F0C7E69007DC282 /* AppDelegate.m in Sources */,
-				D034B5141F0C7E69007DC282 /* main.m in Sources */,
 				D0440DBE1F0E265B00297605 /* LSDropMenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
